@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Developers</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>Developers</h1>
+	<table  class="table table-striped" >
+		<tr>
+			<th>Developer name</th>
+            <th>Foundation year</th>
+            <th>Country</th>
+            <th></th>
+            <th></th>
+
+            <th sec:authorize="hasAuthority('ADMIN')"> </th>
+		</tr>
+
+		<tr th:each="developer : ${developers}">
+			<td th:text="${developer.name}">Name</td>
+            <td th:text="${developer.year}">Year</td>
+            <td th:text="${developer.country}">Country</td>
+            <td><a th:href="@{/editdev/{id}(id=${developer.devId})}" class="btn btn-success" >Edit</a></td>
+			<td sec:authorize="hasAuthority('ADMIN')">
+			<td><a th:href="@{/deleteDeveloper/{devId}(devId=${developer.devId})}" class="btn btn-danger">Delete</a></td>
+		</tr>
+	</table>
+	<a href="/games" class="btn btn-info">Back to Games</a>  
+	<a href="/adddeveloper" class="btn btn-success">Add a developer</a>    	
+</body>
+</html>

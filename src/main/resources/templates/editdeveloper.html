@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Dev</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>Edit a developer</h1>
+	<div>
+		<form th:object="${developer}" th:action="@{/savedeveloper}" action="#" method="post">
+            <input type="hidden" th:field="*{devId}" />
+            <label for="name">Name: </label>
+			<input type="text" id="name" th:field="*{name}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+            <label for="year">Year: </label>
+			<input type="text" id="year" th:field="*{year}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+            <label for="country">Country: </label>
+			<input type="text" id="country" th:field="*{country}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="submit" value="Save"  class="btn btn-success"></input>
+		</form>
+	</div>
+</body>
+</html>

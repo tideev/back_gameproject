@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<title>Games</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<div class="container">
+	<div class="col-md-5">
+		<h1>Welcome to the Gamelist <strong><span sec:authentication="name"></span></strong>!</h1>
+	</div>
+	<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
+	<table  class="table table-striped" >
+		<tr>
+			<th>Game title</th>
+			<th>Discription</th>
+			<th>Relase year</th>
+			<th>Dvelopers</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			
+			<th sec:authorize="hasAuthority('ADMIN')"> </th>
+		</tr>
+
+		<tr th:each="game : ${games}">
+			<td th:text="${game.title}">TITLE</td>
+			<td th:text="${game.description}">DESCRIPTION</td>
+			<td th:text="${game.year}">Relase year</td>
+			<td th:text="${game.developer != null ? game.developer.name:''}">Developer</td>
+			<td><a th:href="@{/reviews/{gameId}(gameId=${game.gameId})}" class="btn btn-warning">Reviews</a></td>
+
+			
+			<td><a th:href="@{/edit/{id}(id=${game.gameId})}" class="btn btn-info" >Edit</a></td>
+			<td sec:authorize="hasAuthority('ADMIN')">
+				<a th:href="@{/delete/{id}(id=${game.gameId})}" class="btn btn-danger">Delete</a></td>    
+		</tr>
+	</table>
+	<a href="/add" class="btn btn-success">Add a game</a>
+	<a href="/developers" class="btn btn-success">Developers</a>    	
+</body>
+</html>

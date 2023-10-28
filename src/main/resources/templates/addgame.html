@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Add a Game</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+	<h1>Add a game</h1>
+	<div>
+		<form th:object="${game}" th:action="@{save}" action="#" method="post">
+			<input type="hidden" th:field="*{gameId}" />
+			<label for="Title">Title: </label>
+			<input type="text" id="title" th:field="*{title}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="description">Description: </label>
+			<input type="text" id="description" th:field="*{description}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="year">Relase year: </label>
+			<input type="text" id="year" th:field="*{year}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="developer">Developer: </label>
+			<select id="developer" name="developer" th:field="*{developer.devId}">
+				<option th:each="developer : ${developers}" th:value="${developer.devId}" th:text="${developer.name}">
+				</option>
+			</select>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="submit" value="Save" class="btn btn-success"></input>
+		</form>
+	</div>
+</body>
+
+</html>
