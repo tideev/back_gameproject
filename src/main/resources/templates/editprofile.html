@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit User Profile</title>
+</head>
+<body>
+    <h1>Edit User Profile</h1>
+    <form th:object="${user}" th:action="@{'/profile/' + ${user.username} + '/edit'}" method="post">
+        Email: <input type="text" th:field="*{email}" /><br/>
+       
+        <input type="submit" value="Save" />
+    </form>
+</body>
+</html>

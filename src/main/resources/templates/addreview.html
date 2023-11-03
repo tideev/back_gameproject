@@ -10,7 +10,7 @@
         <h1>Add a Review for <span th:text="${review.game.title}"></span></h1>
 
         <form th:object="${review}" th:action="@{/addreview/{gameId}(gameId=${review.game.gameId})}" method="post">
-            <input type="hidden" th:field="*{reviewId}" /> <!-- In case this field is not auto-generated -->
+            <input type="hidden" th:field="*{reviewId}" /> 
             <div class="form-group">
                 <label for="raiting">Rating:</label>
                 <input type="number" class="form-control" id="raiting" name="raiting" required="required" min="1" max="5" th:field="*{raiting}" />
@@ -23,6 +23,7 @@
                 <label for="username">Username:</label>
                 <input type="text" class="form-control" id="username" name="username" readonly="readonly" th:value="${review.user.username}" />
             </div>
+            
             <button type="submit" class="btn btn-success">Add Review</button>
         </form>
     </div>

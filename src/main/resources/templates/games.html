@@ -7,12 +7,27 @@
 </head>
 <body>
 	<div class="container">
-	<div class="col-md-5">
-		<h1>Welcome to the Gamelist <strong><span sec:authentication="name"></span></strong>!</h1>
+	<div class="col-md-10">
+		<h1>Welcome to FPS Games <strong><span sec:authentication="name"></span></strong>!</h1>
 	</div>
 	<div class="col-md-4" style="padding:20px 0">
 		<form th:action="@{/logout}" method="post">
 			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+		<a th:href="@{/profile/{username}(username=${loggedInUser})}" class="btn btn-info">Profile</a>
+	</div>
+	<div class="form-group" style="padding:20px 0">
+		<h3>Search games</h3>
+		<form th:action="@{/search}" method="get">
+			<select name="searchType" >
+				<option value="title">Search by Title</option>
+				<option value="developer">Search by Developer</option>
+				<option value="year">Search by Release Year</option>
+			</select>
+			<input type="text" name="keyword" placeholder="Keyword">
+			<input type="submit" value="Search" class="btn btn-sm btn-primary"/>
+			<a th:href="@{/games}" class="btn btn-sm btn-secondary">Clear Search</a>
+		</form>
 		</form>
 	</div>
 	<table  class="table table-striped" >
@@ -20,7 +35,7 @@
 			<th>Game title</th>
 			<th>Discription</th>
 			<th>Relase year</th>
-			<th>Dvelopers</th>
+			<th>Developers</th>
 			<th></th>
 			<th></th>
 			<th></th>
@@ -36,7 +51,8 @@
 			<td><a th:href="@{/reviews/{gameId}(gameId=${game.gameId})}" class="btn btn-warning">Reviews</a></td>
 
 			
-			<td><a th:href="@{/edit/{id}(id=${game.gameId})}" class="btn btn-info" >Edit</a></td>
+			<td sec:authorize="hasAuthority('ADMIN')">
+				<a th:href="@{/edit/{id}(id=${game.gameId})}" class="btn btn-info" >Edit</a></td>
 			<td sec:authorize="hasAuthority('ADMIN')">
 				<a th:href="@{/delete/{id}(id=${game.gameId})}" class="btn btn-danger">Delete</a></td>    
 		</tr>

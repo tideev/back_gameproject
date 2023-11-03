@@ -6,7 +6,23 @@
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
+	<div class="container">
 	<h1>Developers</h1>
+	<p>Here you can see the list of developers.</p>
+	<div class="form-group" style="padding:20px 0">
+		<h3>Search Developers</h3>
+		<form th:action="@{/searchdev}" method="get">
+			<select name="searchType" >
+				<option value="name">Search by Name</option>
+				<option value="country">Search by Country</option>
+				<option value="year">Search by Foundation Year</option>
+			</select>
+			<input type="text" name="keyword" placeholder="Keyword">
+			<input type="submit" value="Search" class="btn btn-sm btn-primary"/>
+			<a th:href="@{/developers}" class="btn btn-sm btn-secondary">Clear Search</a>
+		</form>
+		</form>
+	</div>
 	<table  class="table table-striped" >
 		<tr>
 			<th>Developer name</th>
@@ -22,12 +38,14 @@
 			<td th:text="${developer.name}">Name</td>
             <td th:text="${developer.year}">Year</td>
             <td th:text="${developer.country}">Country</td>
-            <td><a th:href="@{/editdev/{id}(id=${developer.devId})}" class="btn btn-success" >Edit</a></td>
+            <td sec:authorize="hasAuthority('ADMIN')">
+			<a th:href="@{/editdev/{id}(id=${developer.devId})}" class="btn btn-success" >Edit</a></td>
 			<td sec:authorize="hasAuthority('ADMIN')">
-			<td><a th:href="@{/deleteDeveloper/{devId}(devId=${developer.devId})}" class="btn btn-danger">Delete</a></td>
+			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/deleteDeveloper/{devId}(devId=${developer.devId})}" class="btn btn-danger">Delete</a></td>
 		</tr>
 	</table>
 	<a href="/games" class="btn btn-info">Back to Games</a>  
 	<a href="/adddeveloper" class="btn btn-success">Add a developer</a>    	
+</div>
 </body>
 </html>

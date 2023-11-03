@@ -8,25 +8,35 @@
 </head>
 
 <body>
-	<h1>Add a game</h1>
-	<div>
+	<div class="container">
+		<h1>Add a game</h1>
+
 		<form th:object="${game}" th:action="@{save}" action="#" method="post">
 			<input type="hidden" th:field="*{gameId}" />
+		
+		<div class="form-group">
 			<label for="Title">Title: </label>
-			<input type="text" id="title" th:field="*{title}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="text" class="form-control" id="title" required="required" th:field="*{title}" />
+		</div>
+		<div class="form-group">
 			<label for="description">Description: </label>
-			<input type="text" id="description" th:field="*{description}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
+			<textarea class="form-control" id="description" th:field="*{description}" ></textarea>
+			
+		</div>
+		<div class="form-group">
 			<label for="year">Relase year: </label>
-			<input type="text" id="year" th:field="*{year}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="text" class="form-control" id="year" th:field="*{year}" />
+			
+		</div>
+		<div class="form-group">
 			<label for="developer">Developer: </label>
-			<select id="developer" name="developer" th:field="*{developer.devId}">
+			<select id="developer"  class="form-control" name="developer" required="required" th:field="*{developer.devId}">
 				<option th:each="developer : ${developers}" th:value="${developer.devId}" th:text="${developer.name}">
 				</option>
 			</select>
-			<div style="clear: both; display: block; height: 10px;"></div>
+		</div>
+		<div class="form-group">
+			<a href="/games" class="btn btn-info">Back to Games</a> 
 			<input type="submit" value="Save" class="btn btn-success"></input>
 		</form>
 	</div>

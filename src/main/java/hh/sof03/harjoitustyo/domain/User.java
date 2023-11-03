@@ -33,7 +33,7 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
-     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") 
     @JsonIgnoreProperties("user")
 	private List<Review> reviews;
     

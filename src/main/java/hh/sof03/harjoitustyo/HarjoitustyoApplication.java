@@ -75,6 +75,8 @@ public class HarjoitustyoApplication {
 					gameRepo.findByTitle("Call of Duty: Warzone"), user3);
 			Review review8 = new Review(2, "Some technical issues.", gameRepo.findByTitle("Call of Duty: Warzone"),
 					user1);
+			Review review9 = new Review(1, "Needs some technical improvements and new gamemodes.", gameRepo.findByTitle("Call of Duty: Warzone"),
+					user4);
 
 			reviewRepo.save(review1);
 			reviewRepo.save(review2);
@@ -84,6 +86,7 @@ public class HarjoitustyoApplication {
 			reviewRepo.save(review6);
 			reviewRepo.save(review7);
 			reviewRepo.save(review8);
+			reviewRepo.save(review9);
 
 			log.info("fetch all Developers");
 			for (Developer developer : devRepo.findAll()) {

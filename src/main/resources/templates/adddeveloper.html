@@ -6,19 +6,26 @@
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-	<h1>Add a developer</h1>
-	<div>
+	
+	<div class="container">
+		<h1>Add a developer</h1>
 		<form th:object="${developer}" th:action="@{savedeveloper}" action="#" method="post">
             <input type="hidden" th:field="*{devId}" />
+		
+		<div class="form-group">
             <label for="name">Name: </label>
-			<input type="text" id="name" th:field="*{name}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="text" class="form-control" id="name" required="required" th:field="*{name}" />
+		</div>
+			<div class="form-group">
             <label for="year">Year: </label>
-			<input type="text" id="year" th:field="*{year}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="text" class="form-control" id="year" required="required" th:field="*{year}" />
+		</div>
+		<div class="form-group">
             <label for="country">Country: </label>
-			<input type="text" id="country" th:field="*{country}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="text" class="form-control" id="country" th:field="*{country}" />
+		</div>
+			
+			<a href="/developers" class="btn btn-info">Back to Developers</a> 
 			<input type="submit" value="Save"  class="btn btn-success"></input>
 		</form>
 	</div>

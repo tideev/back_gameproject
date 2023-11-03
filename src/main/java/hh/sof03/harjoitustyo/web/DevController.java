@@ -1,5 +1,8 @@
 package hh.sof03.harjoitustyo.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -9,9 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import hh.sof03.harjoitustyo.domain.Developer;
 import hh.sof03.harjoitustyo.domain.DeveloperRepository;
+import hh.sof03.harjoitustyo.domain.Game;
 
 @Controller
 
@@ -56,6 +61,7 @@ public class DevController {
     }
 
     @GetMapping(value = "/editdev/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String editDev(@PathVariable("id") Long devId, Model model) {
 
         Developer dev = devRepo.findById(devId).orElse(null);
@@ -74,5 +80,37 @@ public class DevController {
     	devRepo.deleteById(devId);
         return "redirect:../developers";
     }      
-    
+
+    @GetMapping(value = "/searchdev")
+    public String searchDevs(@RequestParam(value = "searchType", required = false) String searchType,
+            @RequestParam(value = "keyword", required = false) String keyword, Model model) {
+
+        Iterable<Developer> devIterable;
+
+        if (searchType != null && keyword != null) {
+            switch (searchType) {
+                case "name":
+                    devIterable = devRepo.findByNameContainingIgnoreCase(keyword);
+                    break;
+                case "country":
+                    devIterable = devRepo.findByCountryContainingIgnoreCase(keyword);
+                    break;
+                case "year":
+                    devIterable = devRepo.findByYear(Integer.parseInt(keyword));
+                    break;
+                default:
+                    devIterable = devRepo.findAll();
+                    break;
+            }
+        } else {
+            devIterable = devRepo.findAll();
+        }
+
+        List<Developer> devs = new ArrayList<>();
+        devIterable.forEach(devs::add);
+
+        model.addAttribute("developers", devs);
+        return "developers";
+    }
 }
+

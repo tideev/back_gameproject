@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>User Profile</h1>
+    <p>Username: <span th:text="${user.username}"></span></p>
+    <p>Email: <span th:text="${user.email}"></span></p>
+    
+    <h2>Comments:</h2>
+    <ul th:if="${reviews}">
+        <li th:each="review : ${reviews}">
+            <p>Comment: <span th:text="${review.comment}"></span></p>
+            <p>Rating: <span th:text="${review.raiting}"></span></p>
+        </li>
+    </ul>
+    
+    <a th:href="@{'/profile/' + ${user.username} + '/edit'}">Edit Profile</a>
+</body>
+</html>

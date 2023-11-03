@@ -18,7 +18,7 @@
 
             <tr th:each="review : ${reviews}">
                 <td th:text="${review.user.username}"></td>
-                <td th:text="${review.raiting}"></td>
+                <td th:text="${review.raiting}" ></td>
                 <td th:text="${review.comment}"></td>
             </tr>
         </table>
