@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import hh.sof03.harjoitustyo.domain.Developer;
 import hh.sof03.harjoitustyo.domain.DeveloperRepository;
 import hh.sof03.harjoitustyo.domain.Game;
 import hh.sof03.harjoitustyo.domain.GameRepository;
+import jakarta.validation.Valid;
 
 @Controller
 public class GameController {
@@ -35,9 +37,8 @@ public class GameController {
 
         // Kirjautuneen käyttäjän tiedot
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String loggedInUser = userDetails.getUsername();
-        model.addAttribute("loggedInUser", loggedInUser);
-
+        model.addAttribute("user", userDetails);
+        
         model.addAttribute("games", gRepo.findAll());
         return "games";
     }
@@ -50,7 +51,11 @@ public class GameController {
     }
 
     @PostMapping(value = "/save")
-    public String saveGame(@ModelAttribute("game") Game game) {
+    public String saveGame(@ModelAttribute("game") @Valid Game game, BindingResult bindingResult, Model model) {
+    if (bindingResult.hasErrors()) {
+        model.addAttribute("developers", dRepo.findAll());
+        return "addgame";
+    } else{
         if (game.getGameId() == null) {
 
             Long developerId = game.getDeveloper().getDevId();
@@ -76,6 +81,8 @@ public class GameController {
         }
         return "redirect:/games";
     }
+}
+
 
     @GetMapping(value = "/edit/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")

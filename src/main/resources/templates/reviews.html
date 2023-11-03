@@ -12,13 +12,13 @@
         <table class="table table-striped">
             <tr>
                 <th>User</th>
-                <th>Raiting</th>
+                <th>Rating</th>
                 <th>Comment</th>
             </tr>
 
             <tr th:each="review : ${reviews}">
                 <td th:text="${review.user.username}"></td>
-                <td th:text="${review.raiting}" ></td>
+                <td th:text="${review.rating}" ></td>
                 <td th:text="${review.comment}"></td>
             </tr>
         </table>

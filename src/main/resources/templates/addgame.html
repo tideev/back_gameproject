@@ -17,16 +17,17 @@
 		<div class="form-group">
 			<label for="Title">Title: </label>
 			<input type="text" class="form-control" id="title" required="required" th:field="*{title}" />
+			<td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</td>
 		</div>
 		<div class="form-group">
 			<label for="description">Description: </label>
-			<textarea class="form-control" id="description" th:field="*{description}" ></textarea>
-			
+			<textarea class="form-control" id="description" required="required" th:field="*{description}" ></textarea>
+			<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</td>
 		</div>
 		<div class="form-group">
 			<label for="year">Relase year: </label>
-			<input type="text" class="form-control" id="year" th:field="*{year}" />
-			
+			<input type="text" class="form-control" required="required" id="year" th:field="*{year}" />
+			<td th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Error</td>
 		</div>
 		<div class="form-group">
 			<label for="developer">Developer: </label>

@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity(name="users")
 public class User {
@@ -22,6 +23,7 @@ public class User {
 
     // Username with unique constraint
     @Column(name = "username", nullable = false, unique = true)
+	@NotBlank(message = "Unique username is required")
     private String username;
 
     @Column(name = "password", nullable = false)
@@ -31,6 +33,7 @@ public class User {
     private String role;
 
     @Column(name = "email", nullable = false)
+	@NotBlank(message = "Email is required")
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") 

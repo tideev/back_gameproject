@@ -14,7 +14,7 @@
 		<form th:action="@{/logout}" method="post">
 			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
 		</form>
-		<a th:href="@{/profile/{username}(username=${loggedInUser})}" class="btn btn-info">Profile</a>
+		<a th:href="@{/profile/{username}(username=${user.username})}" class="btn btn-info">Profile</a>
 	</div>
 	<div class="form-group" style="padding:20px 0">
 		<h3>Search games</h3>

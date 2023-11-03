@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import hh.sof03.harjoitustyo.domain.Review;
 import hh.sof03.harjoitustyo.domain.ReviewRepository;
 import hh.sof03.harjoitustyo.domain.User;
 import hh.sof03.harjoitustyo.domain.UserRepository;
+import jakarta.validation.Valid;
 
 @Controller
 public class ReviewController {
@@ -56,8 +58,11 @@ public String addReviewForm(@PathVariable Long gameId, Model model) {
     return "redirect:/reviews";
 }
 
-@PostMapping("/addreview/{gameId}")
-public String addReview(@ModelAttribute Review review, @PathVariable Long gameId) {
+@PostMapping("/savereview/{gameId}")
+public String addReview(@ModelAttribute @Valid Review review, BindingResult bindingResult, @PathVariable Long gameId) {
+    if (bindingResult.hasErrors()) {
+        return "addreview";
+    } else{
     Optional<Game> game = gameRepository.findById(gameId);
     User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
     if (game.isPresent() && user != null) {
@@ -66,5 +71,6 @@ public String addReview(@ModelAttribute Review review, @PathVariable Long gameId
         reviewRepository.save(review);
     }
     return "redirect:/reviews/" + gameId;
+}
 }
 }

@@ -1,21 +1,27 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <title>User Profile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
+    <div class="container">
     <h1>User Profile</h1>
     <p>Username: <span th:text="${user.username}"></span></p>
     <p>Email: <span th:text="${user.email}"></span></p>
+    <p>Role: <span th:text="${user.role}"></span></p>
     
+
+</div>
     <h2>Comments:</h2>
     <ul th:if="${reviews}">
         <li th:each="review : ${reviews}">
             <p>Comment: <span th:text="${review.comment}"></span></p>
-            <p>Rating: <span th:text="${review.raiting}"></span></p>
+            <p>Rating: <span th:text="${review.rating}"></span></p>
         </li>
     </ul>
-    
-    <a th:href="@{'/profile/' + ${user.username} + '/edit'}">Edit Profile</a>
+    <a href="/games" class="btn btn-info">Back to Games</a>  
+    <a th:href="@{/edit/{username}(username=${user.username})}">Edit Profile</a>
 </body>
 </html>

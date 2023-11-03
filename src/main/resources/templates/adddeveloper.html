@@ -15,14 +15,17 @@
 		<div class="form-group">
             <label for="name">Name: </label>
 			<input type="text" class="form-control" id="name" required="required" th:field="*{name}" />
+			<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</td>
 		</div>
 			<div class="form-group">
             <label for="year">Year: </label>
 			<input type="text" class="form-control" id="year" required="required" th:field="*{year}" />
+			<td th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Error</td>
 		</div>
 		<div class="form-group">
             <label for="country">Country: </label>
-			<input type="text" class="form-control" id="country" th:field="*{country}" />
+			<input type="text" class="form-control" id="country" required="required" th:field="*{country}" />
+			<td th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Error</td>
 		</div>
 			
 			<a href="/developers" class="btn btn-info">Back to Developers</a> 

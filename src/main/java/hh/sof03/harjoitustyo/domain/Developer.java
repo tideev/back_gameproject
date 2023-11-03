@@ -11,6 +11,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Developer {
@@ -18,8 +21,12 @@ public class Developer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long devId;
+    @NotBlank
+    @Size(min=3, max=50, message = "Name must be between 3 and 50 characters")
     String name;
+    @NotBlank(message = "Country is required")
     String country;
+    @NotNull(message = "Year is required")
     @Column(name="foundation_year")
     private int year;
 

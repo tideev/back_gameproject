@@ -58,7 +58,7 @@ public class HarjoitustyoApplication {
 			User user3 = new User("user3", "$2a$10$XER4GeYqfDIrye.VFtDEoOowyJxp/tsBHoa3.Bgz.1UicZq70P8k.", "USER",
 					"user3@user.com");
 			User user4 = new User("admin1", "$2a$10$l0n.4Sqg1zRmzJegOUf3dOMuX80J4n.3JNJssO3PntKfaRJ4zx8aO", "ADMIN",
-					"admin@admin.com");
+					"admin1@admin.com");
 			userRepo.save(user1);
 			userRepo.save(user2);
 			userRepo.save(user3);

@@ -13,6 +13,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Game {
@@ -20,8 +23,12 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long gameId;
+    @NotBlank
+    @Size(min=3, max=50, message = "Title must be between 3 and 50 characters")
     private String title;
+    @NotBlank(message = "Description is required")
     private String description;
+    @NotNull(message = "Year is required")
     @Column(name="release_year")
     private int year;
 

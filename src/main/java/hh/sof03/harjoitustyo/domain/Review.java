@@ -8,13 +8,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long reviewId;
-    private int raiting;
+    @NotNull(message = "Rating between 1-5 is required")
+    private int rating;
+    @NotBlank(message = "Comment is required")
     private String comment;
 
     @ManyToOne
@@ -28,12 +32,12 @@ public class Review {
     private User user;
 
     public Review() {
-        this.raiting = 0;
+        this.rating = 0;
         this.comment = null;
     }
 
-    public Review(int raiting, String comment, Game game, User user) {
-        this.raiting = raiting;
+    public Review(int rating, String comment, Game game, User user) {
+        this.rating = rating;
         this.comment = comment;
         this.game = game;
         this.user = user;
@@ -47,12 +51,12 @@ public class Review {
         this.reviewId = reviewId;
     }
 
-    public int getRaiting() {
-        return raiting;
+    public int getRating() {
+        return rating;
     }
 
-    public void setRaiting(int raiting) {
-        this.raiting = raiting;
+    public void setRating(int raiting) {
+        this.rating = raiting;
     }
 
     public String getComment() {
@@ -81,6 +85,6 @@ public class Review {
 
     @Override
     public String toString() {
-        return "Review [reviewId=" + reviewId + ", raiting=" + raiting + ", comment=" + comment + ", game=" + this.getGame() + ", user=" + this.getUser() + "]";
+        return "Review [reviewId=" + reviewId + ", rating=" + rating + ", comment=" + comment + ", game=" + this.getGame() + ", user=" + this.getUser() + "]";
     }
 }
