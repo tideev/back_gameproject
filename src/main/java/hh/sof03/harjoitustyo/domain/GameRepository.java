@@ -9,7 +9,8 @@ public interface GameRepository extends CrudRepository<Game, Long> {
     // Haku otsikon osittaisen vastineen perusteella (huomioiden kirjainkoko)
     List<Game> findByTitleContainingIgnoreCase(String title);
 
-    // Haku kehittäjän nimen osittaisen vastineen perusteella (huomioiden kirjainkoko)
+    // Haku kehittäjän nimen osittaisen vastineen perusteella (huomioiden
+    // kirjainkoko)
     List<Game> findByDeveloperNameContainingIgnoreCase(String name);
 
     // Haku julkaisuvuoden perusteella

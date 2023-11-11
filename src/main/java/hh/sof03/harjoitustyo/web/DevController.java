@@ -17,55 +17,53 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import hh.sof03.harjoitustyo.domain.Developer;
 import hh.sof03.harjoitustyo.domain.DeveloperRepository;
-import hh.sof03.harjoitustyo.domain.Game;
 import jakarta.validation.Valid;
 
 @Controller
 
 public class DevController {
 
-       @Autowired
+    @Autowired
     DeveloperRepository devRepo;
 
-      @GetMapping(value="/developers")
+    @GetMapping(value = "/developerlist")
     public String getAllCategories(Model model) {
 
-        model.addAttribute("developers",devRepo.findAll()); 
-        return "developers";
+        model.addAttribute("developers", devRepo.findAll());
+        return "developerlist";
     }
 
-     @RequestMapping(value = "/adddeveloper")
-    public String addDev(Model model){
-    	model.addAttribute("developer", new Developer());
+    @RequestMapping(value = "/adddeveloper")
+    public String addDev(Model model) {
+        model.addAttribute("developer", new Developer());
         return "adddeveloper";
-    }   
+    }
 
     @PostMapping(value = "/savedeveloper")
-    public String saveDev(@ModelAttribute("developer")@Valid Developer dev, BindingResult bindingResult) {
+    public String saveDev(@ModelAttribute("developer") @Valid Developer dev, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "adddeveloper";
-        }
-    else{
-     if (dev.getDevId() == null) {
-        
-            devRepo.save(dev);
-           
         } else {
-    
-            Developer existingDev = devRepo.findById(dev.getDevId()).orElse(null);
-    
-            if (existingDev != null) {
+            if (dev.getDevId() == null) {
 
-                existingDev.setName(dev.getName());
-                existingDev.setYear(dev.getYear());
-                existingDev.setCountry(dev.getCountry());
+                devRepo.save(dev);
 
-                devRepo.save(existingDev);
+            } else {
+
+                Developer existingDev = devRepo.findById(dev.getDevId()).orElse(null);
+
+                if (existingDev != null) {
+
+                    existingDev.setName(dev.getName());
+                    existingDev.setYear(dev.getYear());
+                    existingDev.setCountry(dev.getCountry());
+
+                    devRepo.save(existingDev);
+                }
             }
+            return "redirect:/developerlist";
         }
-        return "redirect:/developers";
     }
-}
 
     @GetMapping(value = "/editdev/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -77,16 +75,16 @@ public class DevController {
             model.addAttribute("developer", dev);
             return "editdeveloper";
         } else {
-            return "redirect:/developers"; 
+            return "redirect:/developerlist";
         }
     }
 
     @GetMapping(value = "/deleteDeveloper/{devId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteDev(@PathVariable("devId") Long devId, Model model) {
-    	devRepo.deleteById(devId);
-        return "redirect:../developers";
-    }      
+        devRepo.deleteById(devId);
+        return "redirect:../developerlist";
+    }
 
     @GetMapping(value = "/searchdev")
     public String searchDevs(@RequestParam(value = "searchType", required = false) String searchType,
@@ -117,7 +115,6 @@ public class DevController {
         devIterable.forEach(devs::add);
 
         model.addAttribute("developers", devs);
-        return "developers";
+        return "developerlist";
     }
 }
-

@@ -23,12 +23,12 @@ public class Review {
 
     @ManyToOne
     @JsonIgnoreProperties("reviews")
-    @JoinColumn(name = "gameId") 
+    @JoinColumn(name = "gameId")
     private Game game;
 
     @ManyToOne
     @JsonIgnoreProperties("reviews")
-    @JoinColumn(name = "userId") 
+    @JoinColumn(name = "userId")
     private User user;
 
     public Review() {
@@ -85,6 +85,7 @@ public class Review {
 
     @Override
     public String toString() {
-        return "Review [reviewId=" + reviewId + ", rating=" + rating + ", comment=" + comment + ", game=" + this.getGame() + ", user=" + this.getUser() + "]";
+        return "Review [reviewId=" + reviewId + ", rating=" + rating + ", comment=" + comment + ", game="
+                + this.getGame() + ", user=" + this.getUser() + "]";
     }
 }

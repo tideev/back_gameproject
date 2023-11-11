@@ -1,0 +1,26 @@
+POST http://localhost:8080/games HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Testi",
+  "description": "Testataan restiä.",
+  "year": 2008,
+  "developer": {
+    "devId": 2
+  }
+}
+
+###
+
+get http://localhost:8080/games
+
+###
+
+POST http://localhost:8080/developers HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "TestiDev",
+    "country": "Canada",
+    "year": 2009,
+}

@@ -13,42 +13,42 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity(name="users")
+@Entity(name = "users")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId", nullable = false, updatable = false)
-    private Long userId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "userId", nullable = false, updatable = false)
+	private Long userId;
 
-    // Username with unique constraint
-    @Column(name = "username", nullable = false, unique = true)
+	// Username with unique constraint
+	@Column(name = "username", nullable = false, unique = true)
 	@NotBlank(message = "Unique username is required")
-    private String username;
+	private String username;
 
-    @Column(name = "password", nullable = false)
-    private String passwordHash;
+	@Column(name = "password", nullable = false)
+	private String passwordHash;
 
-    @Column(name = "role", nullable = false)
-    private String role;
+	@Column(name = "role", nullable = false)
+	private String role;
 
-    @Column(name = "email", nullable = false)
+	@Column(name = "email", nullable = false)
 	@NotBlank(message = "Email is required")
-    private String email;
+	private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") 
-    @JsonIgnoreProperties("user")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnoreProperties("user")
 	private List<Review> reviews;
-    
-    public User() {
-    }
+
+	public User() {
+	}
 
 	public User(String username, String passwordHash, String role, String email) {
 		super();
 		this.username = username;
 		this.passwordHash = passwordHash;
 		this.role = role;
-        this.email = email;
+		this.email = email;
 	}
 
 	public Long getUserId() {
@@ -83,24 +83,20 @@ public class User {
 		this.role = role;
 	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
+	public List<Review> getReviews() {
+		return reviews;
+	}
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    
-
-    
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
 
 }

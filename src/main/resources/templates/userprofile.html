@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <title>User Profile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>User Profile</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">Username: <span th:text="${user.username}"></span></li>
+                    <li class="list-group-item">Email: <span th:text="${user.email}"></span></li>
+                    <li class="list-group-item">Role: <span th:text="${user.role}"></span></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Comments by user:</h3>
+                <ul class="list-group">
+                    <li th:each="review : ${reviews}" class="list-group-item">
+                        <p>Game: <span th:text="${review.game.title}"></span></p>
+                        <p>Comment: <span th:text="${review.comment}"></span></p>
+                        <p>Rating: <span th:text="${review.rating}"></span></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <a href="/fpsgames" class="btn btn-info">Back to Games</a>
+                <a href="/edituser" class="btn btn-info ml-2">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

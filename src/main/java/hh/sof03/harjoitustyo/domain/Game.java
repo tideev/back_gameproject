@@ -24,31 +24,31 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long gameId;
     @NotBlank
-    @Size(min=3, max=50, message = "Title must be between 3 and 50 characters")
+    @Size(min = 3, max = 50, message = "Title must be between 3 and 50 characters")
     private String title;
     @NotBlank(message = "Description is required")
     private String description;
     @NotNull(message = "Year is required")
-    @Column(name="release_year")
+    @Column(name = "release_year")
     private int year;
 
     @ManyToOne // Game @ManyToOne Developers
     @JsonIgnoreProperties("games")
-    @JoinColumn(name = "developerId") //fk määritys Game-taulua varten
+    @JoinColumn(name = "developerId") // fk määritys Game-taulua varten
     private Developer developer;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game") //Review OneToMany Games
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game") // Review OneToMany Games
     @JsonIgnoreProperties("game")
-	private List<Review> reviews;
+    private List<Review> reviews;
 
-    public Game(){
+    public Game() {
         this.title = null;
         this.description = null;
         this.year = 0;
 
     }
 
-    public Game( String title, String description, int year, Developer developer) {
+    public Game(String title, String description, int year, Developer developer) {
         this.title = title;
         this.description = description;
         this.year = year;
@@ -58,24 +58,31 @@ public class Game {
     public Long getGameId() {
         return gameId;
     }
+
     public void setGameId(Long gameId) {
         this.gameId = gameId;
     }
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public int getYear() {
         return year;
     }
+
     public void setYear(int year) {
         this.year = year;
     }
@@ -88,7 +95,7 @@ public class Game {
         this.developer = developer;
     }
 
-     public List<Review> getReviews() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
@@ -96,15 +103,15 @@ public class Game {
         this.reviews = reviews;
     }
 
-    
-
     @Override
     public String toString() {
         if (this.developer != null)
-        return "Game [gameId=" + gameId + ", title=" + title + ", description=" + description + ", year=" + year + ", developer=" + this.getDeveloper() + "]";
+            return "Game [gameId=" + gameId + ", title=" + title + ", description=" + description + ", year=" + year
+                    + ", developer=" + this.getDeveloper() + "]";
 
         else
-            return  "Game [gameId=" + gameId + ", title=" + title + ", description=" + description + ", year=" + year +  "]";
+            return "Game [gameId=" + gameId + ", title=" + title + ", description=" + description + ", year=" + year
+                    + "]";
     }
-    
+
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+	<title>Games</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+	<div class="container">
+		<div class="col-md-10">
+			<h1>Welcome to FPS Games <strong><span sec:authentication="name"></span></strong>!</h1>
+		</div>
+		<div class="col-md-4" style="padding:20px 0">
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
+			</form>
+			<a href="/userprofile" class="btn btn-info">Profile</a>
+		</div>
+		<div class="form-group" style="padding:20px 0">
+			<h3>Search games</h3>
+			<form th:action="@{/search}" method="get">
+				<select name="searchType">
+					<option value="title">Search by Title</option>
+					<option value="developer">Search by Developer</option>
+					<option value="year">Search by Release Year</option>
+				</select>
+				<input type="text" name="keyword" placeholder="Keyword">
+				<input type="submit" value="Search" class="btn btn-sm btn-primary" />
+				<a th:href="@{/fpsgames}" class="btn btn-sm btn-secondary">Clear Search</a>
+			</form>
+			</form>
+		</div>
+		<table class="table table-striped ">
+			<tr>
+				<th>Game title</th>
+				<th>Discription</th>
+				<th>Relase year</th>
+				<th>Developers</th>
+				<th></th>
+				<th></th>
+
+				<th sec:authorize="hasAuthority('ADMIN')"> </th>
+			</tr>
+
+			<tr th:each="game : ${games}">
+				<td th:text="${game.title}">TITLE</td>
+				<td th:text="${game.description}">DESCRIPTION</td>
+				<td th:text="${game.year}">Relase year</td>
+				<td th:text="${game.developer != null ? game.developer.name:''}">Developer</td>
+				<td><a th:href="@{/reviewlist/{gameId}(gameId=${game.gameId})}" class="btn btn-warning">Reviews</a></td>
+
+
+				<td sec:authorize="hasAuthority('ADMIN')">
+					<a th:href="@{/edit/{id}(id=${game.gameId})}" class="btn btn-info">Edit</a>
+				</td>
+				<td sec:authorize="hasAuthority('ADMIN')">
+					<a th:href="@{/delete/{id}(id=${game.gameId})}" class="btn btn-danger">Delete</a>
+				</td>
+			</tr>
+		</table>
+		<a href="/add" class="btn btn-success">Add a game</a>
+		<a href="/developerlist" class="btn btn-info">Developers</a>
+</body>
+
+</html>

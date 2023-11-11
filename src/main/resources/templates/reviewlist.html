@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <title>Reviews</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Reviews for <span th:text="${game.title}"></span></h1>
+        <div id="ratingScoreCard" class="text-center mt-4">
+            <h4>Review Score</h4>
+            <div class="d-flex justify-content-center align-items-center">
+                <h2 class="mr-2" id="averageRating">0.00</h2>
+                <div class="star-rating">
+                    <span class="fa fa-star" data-rating="1"></span>
+                    <span class="fa fa-star" data-rating="2"></span>
+                    <span class="fa fa-star" data-rating="3"></span>
+                    <span class="fa fa-star" data-rating="4"></span>
+                    <span class="fa fa-star" data-rating="5"></span>
+                </div>
+            </div>
+            <p>Total Reviews: <span id="totalReviews">0</span></p>
+        </div>
+        <table class="table table-striped  table-bordered">
+            <tr>
+                <th>User</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th></th>
+            </tr>
+
+            <tr th:each="review : ${reviews}">
+                <td th:text="${review.user.username}"></td>
+                <td th:text="${review.rating}"></td>
+                <td th:text="${review.comment}"></td>
+                <td sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/deleteReview/{reviewId}/{gameId}(reviewId=${review.reviewId}, gameId=${game.gameId})}"
+                        class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        </table>
+
+        <a href="/fpsgames" class="btn btn-info">Back to Games</a>
+        <a th:href="@{/addreview/{gameId}(gameId=${game.gameId})}" class="btn btn-success">Add a Review</a>
+
+        <script th:inline="javascript">
+
+            function setRating(rating) {
+                var stars = document.querySelectorAll('.star-rating .fa');
+                stars.forEach(function (star) {
+                    if (star.getAttribute('data-rating') <= rating) {
+                        star.classList.add('checked');
+                    } else {
+                        star.classList.remove('checked');
+                    }
+                });
+            }
+
+            // Ajax hakee arvostelujen tiedot
+            function fetchReviewStats() {
+                var gameId = /*[[${game.gameId}]]*/ '';
+                var url = '/reviewstats/' + gameId;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('averageRating').innerText = data.averageRating.toFixed(2);
+                        document.getElementById('totalReviews').innerText = data.totalReviews;
+
+                        // Tähden asettaminen
+                        setRating(data.averageRating);
+                    })
+                    .catch(error => console.error('Error fetching review stats:', error));
+            }
+
+            // Kutsuu fetchReviewStats kun ikkuna ladataan
+            window.onload = fetchReviewStats;
+            /*]]>*/
+        </script>
+    </div>
+</body>
+
+</html>

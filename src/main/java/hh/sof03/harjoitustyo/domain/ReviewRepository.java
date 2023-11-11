@@ -5,5 +5,9 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ReviewRepository extends CrudRepository<Review, Long> {
-    List<Review> findByGameGameId(Long gameId); // Use the correct property name for the game id
+   List<Review> findByGameGameId(Long gameId);
+
+   List<Review> findByUser(User user);
+
+   List<Review> findByReviewId(Long reviewId);
 }

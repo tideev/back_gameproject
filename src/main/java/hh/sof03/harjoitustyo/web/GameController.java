@@ -32,15 +32,14 @@ public class GameController {
     @Autowired
     DeveloperRepository dRepo;
 
-    @GetMapping(value = "/games")
+    @GetMapping(value = "/fpsgames")
     public String getAllGames(Model model) {
-
         // Kirjautuneen käyttäjän tiedot
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", userDetails);
-        
+
         model.addAttribute("games", gRepo.findAll());
-        return "games";
+        return "fpsgames";
     }
 
     @RequestMapping(value = "/add")
@@ -52,37 +51,36 @@ public class GameController {
 
     @PostMapping(value = "/save")
     public String saveGame(@ModelAttribute("game") @Valid Game game, BindingResult bindingResult, Model model) {
-    if (bindingResult.hasErrors()) {
-        model.addAttribute("developers", dRepo.findAll());
-        return "addgame";
-    } else{
-        if (game.getGameId() == null) {
-
-            Long developerId = game.getDeveloper().getDevId();
-            Developer dev = dRepo.findById(developerId).orElse(null);
-            game.setDeveloper(dev);
-
-            gRepo.save(game);
-
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("developers", dRepo.findAll());
+            return "addgame";
         } else {
-            Game existingGame = gRepo.findById(game.getGameId()).orElse(null);
-
-            if (existingGame != null) {
-                existingGame.setTitle(game.getTitle());
-                existingGame.setDescription(game.getDescription());
-                existingGame.setYear(game.getYear());
+            if (game.getGameId() == null) {
 
                 Long developerId = game.getDeveloper().getDevId();
                 Developer dev = dRepo.findById(developerId).orElse(null);
-                existingGame.setDeveloper(dev);
+                game.setDeveloper(dev);
 
-                gRepo.save(existingGame);
+                gRepo.save(game);
+
+            } else {
+                Game existingGame = gRepo.findById(game.getGameId()).orElse(null);
+
+                if (existingGame != null) {
+                    existingGame.setTitle(game.getTitle());
+                    existingGame.setDescription(game.getDescription());
+                    existingGame.setYear(game.getYear());
+
+                    Long developerId = game.getDeveloper().getDevId();
+                    Developer dev = dRepo.findById(developerId).orElse(null);
+                    existingGame.setDeveloper(dev);
+
+                    gRepo.save(existingGame);
+                }
             }
+            return "redirect:/fpsgames";
         }
-        return "redirect:/games";
     }
-}
-
 
     @GetMapping(value = "/edit/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -94,7 +92,7 @@ public class GameController {
             model.addAttribute("developers", dRepo.findAll());
             return "editgame";
         } else {
-            return "redirect:/games";
+            return "redirect:/fpsgames";
         }
     }
 
@@ -102,7 +100,7 @@ public class GameController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteGame(@PathVariable("id") Long gameId, Model model) {
         gRepo.deleteById(gameId);
-        return "redirect:../games";
+        return "redirect:../fpsgames";
     }
 
     @GetMapping(value = "/search")
@@ -134,6 +132,6 @@ public class GameController {
         gameIterable.forEach(games::add);
 
         model.addAttribute("games", games);
-        return "games";
+        return "fpsgames";
     }
 }

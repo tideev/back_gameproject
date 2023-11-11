@@ -1,36 +1,39 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Edit Dev</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	<title>Edit Dev</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
+
 <body>
-	
+
 	<div class="container">
 		<h1>Edit a developer</h1>
 		<form th:object="${developer}" th:action="@{/savedeveloper}" action="#" method="post">
-            <input type="hidden" th:field="*{devId}" />
-		
-		<div class="form-group">
-            <label for="name">Name: </label>
-			<input type="text" class="form-control" id="name" required="required" th:field="*{name}" /> 
-			<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</td>
-		</div>
-            <div class="form-group">
-            <label for="year">Year: </label>
-			<input type="text" class="form-control" id="year" required="required" th:field="*{year}" />
-			<td th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Error</td>
-		</div>
-		<div class="form-group">
-            <label for="country">Country: </label>
-			<input type="text" class="form-control" id="country" required="required" th:field="*{country}" />
-			<td th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Error</td>
-		</div>
+			<input type="hidden" th:field="*{devId}" />
 
-			<a href="/developers" class="btn btn-info">Back to Developers</a> 
-			<input type="submit" value="Save"  class="btn btn-success"></input>
+			<div class="form-group">
+				<label for="name">Name: </label>
+				<input type="text" class="form-control" id="name" required="required" th:field="*{name}" />
+				<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</td>
+			</div>
+			<div class="form-group">
+				<label for="year">Year: </label>
+				<input type="text" class="form-control" id="year" required="required" th:field="*{year}" />
+				<td th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Error</td>
+			</div>
+			<div class="form-group">
+				<label for="country">Country: </label>
+				<input type="text" class="form-control" id="country" required="required" th:field="*{country}" />
+				<td th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Error</td>
+			</div>
+
+			<a href="/developerlist" class="btn btn-info">Back to Developers</a>
+			<input type="submit" value="Save" class="btn btn-success"></input>
 		</form>
 	</div>
 </body>
+
 </html>

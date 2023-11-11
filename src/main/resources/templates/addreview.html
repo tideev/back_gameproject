@@ -1,33 +1,39 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 <head>
     <title>Add Review</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
+
 <body>
     <div class="container">
         <h1>Add a Review for <span th:text="${review.game.title}"></span></h1>
 
         <form th:object="${review}" th:action="@{/savereview/{gameId}(gameId=${review.game.gameId})}" method="post">
-            <input type="hidden" th:field="*{reviewId}" /> 
+            <input type="hidden" th:field="*{reviewId}" />
             <div class="form-group">
                 <label for="rating">Rating:</label>
-                <input type="number" class="form-control" id="rating" name="rating" required="required" min="1" max="5" th:field="*{rating}" />
+                <input type="number" class="form-control" id="rating" name="rating" required="required" min="1" max="5"
+                    th:field="*{rating}" />
                 <td th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}">Error</td>
             </div>
             <div class="form-group">
                 <label for="comment">Comment:</label>
-                <textarea class="form-control" id="comment" name="comment" required="required" th:field="*{comment}"></textarea>
+                <textarea class="form-control" id="comment" name="comment" required="required"
+                    th:field="*{comment}"></textarea>
                 <td th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Error</td>
             </div>
             <div class="form-group">
                 <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" name="username" readonly="readonly" th:value="${review.user.username}" />
+                <input type="text" class="form-control" id="username" name="username" readonly="readonly"
+                    th:value="${review.user.username}" />
             </div>
-            <a th:href="@{/reviews/{gameId}(gameId=${review.game.gameId})}" class="btn btn-info">Back to Reviews</a> 
+            <a th:href="@{/reviewlist/{gameId}(gameId=${review.game.gameId})}" class="btn btn-info">Back to Reviews</a>
             <button type="submit" value="Save" class="btn btn-success">Add Review</button>
         </form>
     </div>
 </body>
+
 </html>
