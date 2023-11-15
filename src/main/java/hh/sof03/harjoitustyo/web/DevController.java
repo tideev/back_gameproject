@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import hh.sof03.harjoitustyo.domain.Developer;
 import hh.sof03.harjoitustyo.domain.DeveloperRepository;
+import hh.sof03.harjoitustyo.domain.Game;
+import hh.sof03.harjoitustyo.domain.GameRepository;
 import jakarta.validation.Valid;
 
 @Controller
@@ -26,8 +28,11 @@ public class DevController {
     @Autowired
     DeveloperRepository devRepo;
 
+    @Autowired
+    GameRepository gRepo;
+
     @GetMapping(value = "/developerlist")
-    public String getAllCategories(Model model) {
+    public String getAllDevs(Model model) {
 
         model.addAttribute("developers", devRepo.findAll());
         return "developerlist";
@@ -82,7 +87,19 @@ public class DevController {
     @GetMapping(value = "/deleteDeveloper/{devId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteDev(@PathVariable("devId") Long devId, Model model) {
-        devRepo.deleteById(devId);
+        Developer developer = devRepo.findById(devId).orElse(null);
+
+        if (developer != null) {
+            // Käy läpi kaikki pelit ja poista niiden liittyvä kehittäjä
+            List<Game> games = gRepo.findByDeveloper(developer);
+            for (Game game : games) {
+                game.setDeveloper(null);
+                gRepo.save(game);
+            }
+
+            devRepo.deleteById(devId);
+        }
+
         return "redirect:../developerlist";
     }
 

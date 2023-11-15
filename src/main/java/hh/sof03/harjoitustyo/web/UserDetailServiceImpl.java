@@ -1,6 +1,5 @@
 package hh.sof03.harjoitustyo.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +16,6 @@ import hh.sof03.harjoitustyo.domain.UserRepository;
 public class UserDetailServiceImpl implements UserDetailsService {
 	private final UserRepository repository;
 
-	@Autowired
 	public UserDetailServiceImpl(UserRepository userRepository) {
 		this.repository = userRepository;
 	}

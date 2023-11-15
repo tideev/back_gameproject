@@ -1,4 +1,4 @@
-POST http://localhost:8080/games HTTP/1.1
+POST http://localhost:8080/games
 Content-Type: application/json
 
 {
@@ -13,6 +13,11 @@ Content-Type: application/json
 ###
 
 get http://localhost:8080/games
+
+###
+
+
+get http://localhost:8080/games/1
 
 ###
 

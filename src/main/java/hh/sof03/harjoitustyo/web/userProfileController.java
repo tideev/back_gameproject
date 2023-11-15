@@ -37,6 +37,7 @@ public class userProfileController {
         User user = userRepository.findByUsername(username);
 
         List<Review> review = reviewRepository.findByUser(user);
+        
         model.addAttribute("user", user);
         model.addAttribute("reviews", review);
         return "userprofile";

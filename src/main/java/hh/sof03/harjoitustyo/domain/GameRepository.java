@@ -15,4 +15,6 @@ public interface GameRepository extends CrudRepository<Game, Long> {
 
     // Haku julkaisuvuoden perusteella
     List<Game> findByYear(int year);
+
+    List<Game> findByDeveloper(Developer developer);
 }

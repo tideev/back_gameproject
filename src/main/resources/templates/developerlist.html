@@ -10,7 +10,7 @@
 <body>
 	<div class="container">
 		<h1>Developers</h1>
-		<p>Here you can see the list of developers.</p>
+		<p>Here you can see the list for game developers.</p>
 		<div class="form-group" style="padding:20px 0">
 			<h4>Search Developers</h4>
 			<form th:action="@{/searchdev}" method="get">
@@ -48,7 +48,7 @@
 			</tr>
 		</table>
 		<a href="/fpsgames" class="btn btn-info">Back to Games</a>
-		<a href="/adddeveloper" class="btn btn-success">Add a developer</a>
+		<a sec:authorize="isAuthenticated()" href="/adddeveloper" class="btn btn-success">Add a developer</a>
 	</div>
 </body>
 

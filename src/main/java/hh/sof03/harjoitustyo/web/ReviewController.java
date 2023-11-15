@@ -92,13 +92,17 @@ public class ReviewController {
 
     @GetMapping("/reviewstats/{gameId}")
     @ResponseBody
+    //Vastauksena lähetetään JSON-muotoinen Map, joka sisältää String ja Object.
     public ResponseEntity<Map<String, Object>> getReviewStats(@PathVariable Long gameId) {
         Optional<Game> game = gameRepository.findById(gameId);
         if (game.isPresent()) {
             List<Review> reviews = reviewRepository.findByGameGameId(gameId);
+            
+            //Lasketaan keskiarvo arvosanoille ja arvostelujen yhteismäärä.
             double averageRating = reviews.stream().mapToInt(Review::getRating).average().orElse(0.0);
             long totalReviews = reviews.size();
 
+            //Luodaan uusi HashMap, johon tallennetaan arvostelutilastot ja lisätään tilastot.
             Map<String, Object> stats = new HashMap<>();
             stats.put("averageRating", averageRating);
             stats.put("totalReviews", totalReviews);

@@ -48,7 +48,7 @@
         </table>
 
         <a href="/fpsgames" class="btn btn-info">Back to Games</a>
-        <a th:href="@{/addreview/{gameId}(gameId=${game.gameId})}" class="btn btn-success">Add a Review</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/addreview/{gameId}(gameId=${game.gameId})}" class="btn btn-success">Add a Review</a>
 
         <script th:inline="javascript">
 

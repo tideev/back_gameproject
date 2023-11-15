@@ -25,6 +25,13 @@ public class WebSecurityConfig {
         public SecurityFilterChain configure(HttpSecurity http) throws Exception {
                 http
                                 .authorizeHttpRequests(authorize -> authorize
+                                                .requestMatchers(antMatcher("/")).permitAll()
+                                                .requestMatchers(antMatcher("/reviewstats/{gameId}")).permitAll()
+                                                .requestMatchers(antMatcher("/search")).permitAll()
+                                                .requestMatchers(antMatcher("/searchdev")).permitAll()
+                                                .requestMatchers(antMatcher("/fpsgames")).permitAll()
+                                                .requestMatchers(antMatcher("/reviewlist/**")).permitAll()
+                                                .requestMatchers(antMatcher("/developerlist")).permitAll()
                                                 .requestMatchers(antMatcher("/css/**")).permitAll()
                                                 .requestMatchers(antMatcher("/users/**")).permitAll()
                                                 .requestMatchers(antMatcher("/reviews/**")).permitAll()
@@ -46,6 +53,7 @@ public class WebSecurityConfig {
                                                 .defaultSuccessUrl("/fpsgames", true)
                                                 .permitAll())
                                 .logout(logout -> logout
+                                                .logoutSuccessUrl("/fpsgames")
                                                 .permitAll());
                 return http.build();
         }
